@@ -23,3 +23,10 @@ li{
     cursor: pointer;
 }
 
+.todo-container .add-todo-container .txt-content-todo{
+    width: 300px;
+    border: 0;
+    height: 35px;
+    margin-right: 10px;
+    text-indent: 10px;
+}

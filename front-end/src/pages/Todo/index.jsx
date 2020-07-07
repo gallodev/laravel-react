@@ -3,15 +3,12 @@ import { Todos } from '../../api'
 import './style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner , faTimesCircle , faPlus } from '@fortawesome/free-solid-svg-icons'
-//import Modal from 'react-modal';
-
 
 export default function Todo() {
-    
-    
-
+        
     const [todos,setTodos] = useState([]);
-    const [loading,setLoading] = useState(true);
+    const [loading,setLoading] = useState(true);    
+    const [content,setContent] = useState("");
 
     useEffect(() => {
         
@@ -41,20 +38,37 @@ export default function Todo() {
     }
 
     function getData(){
-        return (loading)? <FontAwesomeIcon icon={faSpinner} pulse rotation={270} /> : mountTodoList();
+        if(loading){
+            return <FontAwesomeIcon icon={faSpinner} pulse rotation={270} /> 
+        }else{
+            return mountTodoList();
+        }        
     }
 
-    function addTodoModal(){
-        alert("add");
+    function saveTodo(id = 0){
+        if(id !== 0){
+            //save
+            let todo = {
+                content : content,
+                isFinished : 0
+            };
 
-    }
+            Todos.save(todo).then(res=>{
+                alert(`Saved new todo : ${content}`);
+            })
+        }else{
+            // update
+        }
+        
+    }        
 
     const data = getData();
 
     return (
         <div className="todo-container">
-            <div className="add-todo-container" onClick={addTodoModal}>
-                <FontAwesomeIcon className="add-todo" icon={faPlus} /> 
+            <div className="add-todo-container">
+                <input type="text" placeholder="Content TODO" className="txt-content-todo" value={content} onChange={(e)=>setContent(e.target.value)}/>
+                <FontAwesomeIcon className="add-todo" icon={faPlus} onClick={saveTodo} /> 
             </div>
             <ul className="todo-list-container">
                 {data}

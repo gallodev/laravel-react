@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Todos extends Model
 {
-    protected $filable = ['content','isFinished'];
+    protected $fillable = ['content','isFinished'];
 }
