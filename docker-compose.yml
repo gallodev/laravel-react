@@ -1,7 +1,10 @@
 version: '3'
 
 networks:
-  laravel:
+  shared:
+    external:
+      name: shared
+    
 
 services:
   nginx:
@@ -16,10 +19,12 @@ services:
       - php
       - mysql
     networks:
-      - laravel
+      - shared
 
   mysql:
-    image: mysql:5.7.29
+    image: mysql:latest
+    command:
+      - "--default-authentication-plugin=mysql_native_password"
     container_name: mysql
     restart: unless-stopped
     tty: true
@@ -33,7 +38,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
-      - laravel
+      - shared
 
   php:
     build:
@@ -45,7 +50,7 @@ services:
     ports:
       - "9000:9000"
     networks:
-      - laravel
+      - shared
 
   composer:
     image: composer:latest
@@ -56,7 +61,7 @@ services:
     depends_on:
       - php
     networks:
-      - laravel
+      - shared
 
   npm:
     image: node:13.7
@@ -78,4 +83,8 @@ services:
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
-      - laravel
+      - shared
+
+volumes:
+  dbdata:
+    driver: local

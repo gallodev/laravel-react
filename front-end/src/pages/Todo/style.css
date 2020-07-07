@@ -1,0 +1,25 @@
+li{
+    list-style: none;
+    margin: 15px 0;
+    text-align: left;
+    padding: 15px 15px;
+    background-color: #82287f;
+    width: 400px;
+}
+
+.todo-container{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    background-color: #a536a2;
+    margin: 0 100px;
+}
+
+.todo-container .add-todo-container{    
+    align-self: flex-end;    
+    margin: 20px;
+    cursor: pointer;
+}
+
